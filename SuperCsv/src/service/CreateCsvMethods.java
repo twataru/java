@@ -18,7 +18,7 @@ public class CreateCsvMethods {
 	public void insSystemKanri() {
 		String url = /* csvファイル */;
 		try (ICsvBeanReader inFile = new CsvBeanReader(new FileReader(url), CsvPreference.EXCEL_PREFERENCE);
-				Connection con = DriverManager.getConnection(/* psql */);
+				Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DB名", "ユーザー", "");
 				Statement statement = con.createStatement();) {
 
 			SystemBean line = null;
@@ -33,6 +33,7 @@ public class CreateCsvMethods {
 				System.out.println(sql);
 				statement.executeUpdate(sql);
 			}
+				
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,8 +52,9 @@ public class CreateCsvMethods {
 
 		String tableurl = /* csvファイル */;
 		try (ICsvBeanReader inFile = new CsvBeanReader(new FileReader(tableurl), CsvPreference.EXCEL_PREFERENCE);
-				Connection con = DriverManager.getConnection(/* psql */);
+				Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DB名", "ユーザー", "");
 				Statement statement = con.createStatement();) {
+					
 			final String[] header = new String[] { "systemCode", "kubunCode", "startWeek", "endWeek", "startTime", "endTime" };
 			DayBean day = new DayBean();
 			String outputurl;
