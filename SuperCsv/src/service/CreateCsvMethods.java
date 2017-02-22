@@ -21,15 +21,15 @@ public class CreateCsvMethods {
 				Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DB名", "ユーザー", "");
 				Statement statement = con.createStatement();) {
 
-			SystemBean line = null;
 			final String[] header = inFile.getHeader(true);
 			int cnt = 0;
 			String sql;
 			String insert = "INSERT INTO tableA ( system_code, system_name, status, comment, environment, update_user_id, update_date)";
+			SystemBean line = null;
 			while ((line = inFile.read(SystemBean.class, header)) != null) {
 				cnt++;
 				sql = String.format("%s VALUES ('%03d', '%s', '%s', '%s', '%s' , 'user' , now()", insert, cnt,
-						line.getSystemName(), line.getSiStatus(), line.getComment(), line.getVmEnvironment());
+						line.getSystemName(), line.getStatus(), line.getComment(), line.getEnvironment());
 				System.out.println(sql);
 				statement.executeUpdate(sql);
 			}
@@ -56,9 +56,10 @@ public class CreateCsvMethods {
 				Statement statement = con.createStatement();) {
 					
 			final String[] header = new String[] { "systemCode", "kubunCode", "startWeek", "endWeek", "startTime", "endTime" };
-			DayBean day = new DayBean();
+
 			String outputurl;
 			String insert = "INSERT INTO tableB (system_code, day_of_week, kubun_id, start_time, end_time, update_user_id, update_date)";
+			DayBean day = new DayBean();
 			while ((day = inFile.read(DayBean.class, header)) != null) {
 
 				outputurl = "C:/" + day.getSystemCode()
