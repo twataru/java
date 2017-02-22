@@ -59,7 +59,7 @@ public class CreateCsvMethods {
 			String insert = "INSERT INTO tableB (system_code, day_of_week, kubun_id, start_time, end_time, update_user_id, update_date)";
 			while ((day = inFile.read(DayBean.class, header)) != null) {
 
-				outputurl = "C:/Users/taniuchi.wataru/Desktop/pleiades/output/" + day.getSystemCode()
+				outputurl = "C:/" + day.getSystemCode()
 						+ day.getKubunCode() + "_" + day.getStartWeek() + "-" + day.getEndWeek() + "_"
 						+ day.getStartTime() + ".csv";
 
