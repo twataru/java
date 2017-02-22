@@ -16,19 +16,19 @@ import bean.SystemBean;
 public class CreateCsvMethods {
 
 	public void insSystemKanri() {
-		String url = "C:/Users/taniuchi.wataru/Desktop/pleiades/files/プレミアム仮想化基盤オンライン稼働時間まとめ(20170216).csv";
+		String url = /* csvファイル */;
 		try (ICsvBeanReader inFile = new CsvBeanReader(new FileReader(url), CsvPreference.EXCEL_PREFERENCE);
-				Connection con = DriverManager.getConnection("jdbc:postgresql://tmnfvm03:5432/webdb", "uni", "");
+				Connection con = DriverManager.getConnection(/* psql */);
 				Statement statement = con.createStatement();) {
 
 			SystemBean line = null;
 			final String[] header = inFile.getHeader(true);
 			int cnt = 0;
 			String sql;
-			String insert = "INSERT INTO showpublic.system_kanri( system_code, system_name, si_status, disp_comment, vm_environment, update_user_id, update_date)";
+			String insert = "INSERT INTO tableA ( system_code, system_name, status, comment, environment, update_user_id, update_date)";
 			while ((line = inFile.read(SystemBean.class, header)) != null) {
 				cnt++;
-				sql = String.format("%s VALUES ('%03d', '%s', '%s', '%s', '%s', 'taniuchi', now())", insert, cnt,
+				sql = String.format("%s VALUES ('%03d', '%s', '%s', '%s', '%s' , 'user' , now()", insert, cnt,
 						line.getSystemName(), line.getSiStatus(), line.getComment(), line.getVmEnvironment());
 				System.out.println(sql);
 				statement.executeUpdate(sql);
@@ -49,16 +49,14 @@ public class CreateCsvMethods {
 		week.put("金", 6);
 		week.put("土", 7);
 
-		String tableurl = "C:/Users/taniuchi.wataru/Desktop/pleiades/files/稼働テーブル.csv";
+		String tableurl = /* csvファイル */;
 		try (ICsvBeanReader inFile = new CsvBeanReader(new FileReader(tableurl), CsvPreference.EXCEL_PREFERENCE);
-				Connection con = DriverManager.getConnection("jdbc:postgresql://tmnfvm03:5432/webdb", "uni", "");
+				Connection con = DriverManager.getConnection(/* psql */);
 				Statement statement = con.createStatement();) {
-			statement.executeUpdate("delete from showpublic.ontime");
-			final String[] header = new String[] { "systemCode", "kubunCode", "startWeek", "endWeek", "startTime",
-					"endTime" };
+			final String[] header = new String[] { "systemCode", "kubunCode", "startWeek", "endWeek", "startTime", "endTime" };
 			DayBean day = new DayBean();
 			String outputurl;
-			String insert = "INSERT INTO showpublic.ontime(system_code, day_of_week, kubun_id, start_time, end_time, update_user_id, update_date)";
+			String insert = "INSERT INTO tableB (system_code, day_of_week, kubun_id, start_time, end_time, update_user_id, update_date)";
 			while ((day = inFile.read(DayBean.class, header)) != null) {
 
 				outputurl = "C:/Users/taniuchi.wataru/Desktop/pleiades/output/" + day.getSystemCode()
@@ -70,7 +68,7 @@ public class CreateCsvMethods {
 					int end = week.get(day.getEndWeek());
 					String sql;
 					for (int current = week.get(day.getStartWeek()); current <= end; current++) {
-						sql = String.format("%s VALUES ('%s','%s','%s','%s','%s','taniuchi',now()) ",insert,day.getSystemCode(),
+						sql = String.format("%s VALUES ('%s','%s','%s','%s','%s','user',now()) ",insert,day.getSystemCode(),
 								current, day.getKubunCode(), day.getStartTime(), day.getEndTime());
 						statement.executeUpdate(sql);
 						System.out.println(sql);
