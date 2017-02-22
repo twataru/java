@@ -2,8 +2,9 @@ package bean;
 
 public class SystemBean {
 	String systemName;
-	String vmEnvironment;
+	String environment;
 	String siStatus;
+	String comment;
 
 	public String getSystemName() {
 		return systemName;
@@ -14,19 +15,19 @@ public class SystemBean {
 	}
 
 	public String getVmEnvironment() {
-		return vmEnvironment;
+		return environment;
 	}
 
-	public void setVmEnvironment(String vmEnvironment) {
-		this.vmEnvironment = vmEnvironment;
+	public void setEnvironment(String environment) {
+		this.environment = environment;
 	}
 
-	public String getSiStatus() {
+	public String getStatus() {
 		return siStatus;
 	}
 
-	public void setSiStatus(String siStatus) {
-		this.siStatus = siStatus;
+	public void setStatus(String status) {
+		this.siStatus = status;
 	}
 
 	public String getComment() {
@@ -37,5 +38,5 @@ public class SystemBean {
 		this.comment = comment;
 	}
 
-	String comment;
+
 }
