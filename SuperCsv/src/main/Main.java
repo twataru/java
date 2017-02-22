@@ -1,13 +1,13 @@
 package main;
 
-import service.CreateCsvMethods;
+import service.InsDBMethods;
 
 public class Main {
 
 	public static void main(String[] args) {
-		CreateCsvMethods ccm = new CreateCsvMethods();
-		ccm.insSystemKanri();
-		ccm.insOntime();
+		InsDBMethods idm = new InsDBMethods();
+		idm.insSystemKanri();
+		idm.insOntime();
 	}
 
 }

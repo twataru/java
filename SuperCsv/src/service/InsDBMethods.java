@@ -13,7 +13,7 @@ import org.supercsv.prefs.CsvPreference;
 import bean.DayBean;
 import bean.SystemBean;
 
-public class CreateCsvMethods {
+public class InsDBMethods {
 
 	public void insSystemKanri() {
 		String url = /* csvファイル */;
