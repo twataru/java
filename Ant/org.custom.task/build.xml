@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<project name="anttasktest" default="test">
+
+	<!-- クラスパスにjar化したカスタムタスクを追加する -->
+	<taskdef name="custom.ant.taskname" classname="projectname.classname" classpath="custom.task.classpath" />
+
+	<target name="test">
+		<custom.ant.taskname name="TESTTASK" />
+	</target>
+</project>
