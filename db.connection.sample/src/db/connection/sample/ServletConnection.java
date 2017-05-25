@@ -15,6 +15,11 @@ import javax.sql.DataSource;
 
 public class ServletConnection extends HttpServlet {
 
+	/**
+	 * POSTメソッド
+	 *
+	 * doPostとdoGetは両方オーバーライドしなければならない
+	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String result = conDB();
@@ -31,8 +36,11 @@ public class ServletConnection extends HttpServlet {
 		out.close();
 	}
 
+	/**
+	 * GETメソッド
+	 */
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String result = conDB();
 		resp.setContentType("text/html;charset=SJIS");
 		PrintWriter out = resp.getWriter();
@@ -47,6 +55,9 @@ public class ServletConnection extends HttpServlet {
 		out.close();
 	}
 
+	/**
+	 * DB接続メソッド
+	 */
 	private String conDB() {
 
 		InitialContext context = null;
@@ -54,9 +65,15 @@ public class ServletConnection extends HttpServlet {
 		Statement stmt = null;
 		ResultSet rs = null;
 		try {
+			//JNDIで検索をするときの出発点
 			context = new InitialContext();
+
+			// DataSourceオブジェクトを使う。 作ったjdbcのJNDI名をlookupする
 			DataSource ds = (DataSource) context.lookup("jdbc/test");
+
+			//DB接続 closeするとプールに戻す
 			conn = ds.getConnection();
+
 			stmt = conn.createStatement();
 			String sql = "select * from SAMPLE_TABLE";
 			rs = stmt.executeQuery(sql);
